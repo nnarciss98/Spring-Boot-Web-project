@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/v1/person") //This annotation will allow us to indicate where to send requests. For example we can choose to send a specific request to "https://site.com/something" and the class with the "@RequestMapping("something")" in that website will be the one handling the request
 @RestController
@@ -38,5 +39,17 @@ public class PersonController {
     @GetMapping //This annotation indicates this will be called when get requests are sent to this address
     public List<Person> getAllPersons(){
         return personService.getAllPeople();
+    }
+
+    /**
+     * Search for the person with the given ID.
+     * @param id
+     *          ID of the person you are looking for.
+     * @return
+     *          The person that has the given ID.
+     */
+    @GetMapping(path = "{id}") //This annotation gets the "id" from the path. Whatever comes after the path in the @RequestMapping is saved under the given identifier (in this case "id") to be used in other annotations if needed
+    public Person getPersonById(@PathVariable("id") UUID id){ //This annotation lets us personalise get requests, this one will be executed using the "result" from the last annotation converted to UUID and passed as a parameter in this method
+        return personService.getPersonByID(id).orElse(null); //Here at the .orElse() you could also send a 404 page or a custom message to the client
     }
 }

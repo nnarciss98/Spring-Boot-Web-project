@@ -59,16 +59,21 @@ public class PersonDataAccessService implements PersonDao {
      *          ID of the person that needs to be updated.
      * @param person
      *          New object person with the updated elements
-     *          (since this is a small project where person has only a fiel to learn how this works, there is no point on going through the whole update-each-individual-element-at-a-time process)
+     *          (since this is a small project where person has only a field to learn how this works, there is no point on going through the whole update-each-individual-element-at-a-time process)
      * @return
      *          If the person is updated successfully return 1, else return 0.
      */
     @Override
     public int updatePersonByID(UUID id, Person person) {
-        if (selectPersonByID(id) != null){
-
-        }
-        return 0;
+        return selectPersonByID(id)
+                .map(p -> {
+                    int indexOfPersonToDelete = database.indexOf(person);
+                    if (indexOfPersonToDelete == 1) {
+                        database.set(indexOfPersonToDelete, person);
+                        return 1;
+                    }
+                    return 0;
+                }).orElse(0); //Here you could send the client to a 404 page or a personalised message
     }
 
     /**
@@ -80,7 +85,7 @@ public class PersonDataAccessService implements PersonDao {
      */
     @Override
     public int deletePersonById(UUID id) {
-        if (selectPersonByID(id) != null) {
+        if (selectPersonByID(id).isPresent()) {
             database.remove(selectPersonByID(id));
             return 1;
         }

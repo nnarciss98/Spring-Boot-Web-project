@@ -22,7 +22,7 @@ public interface PersonDao {
     /**
      * Add a person without an id.
      * @param person
-     *          Persona that will be added to the database.
+     *          Person that will be added to the database.
      * @return
      *          If the person is added successfully return 1, else return 0.
      */
@@ -32,7 +32,7 @@ public interface PersonDao {
     }
 
     /**
-     * Select all the people in the "local database" (in this example the database is a local list, since we don't need more than that to store this data).
+     * Select all the people in the "local database" (in this example the database is a local list, since we don't need more than that to store this data), and return the list with all selected people.
      * @return
      *          A list of all the people in the local database.
      */
@@ -54,7 +54,7 @@ public interface PersonDao {
      *          ID of the person that needs to be updated.
      * @param person
      *          New object person with the updated elements
-     *          (since this is a small project where person has only a fiel to learn how this works, there is no point on going through the whole update-each-individual-element-at-a-time process)
+     *          (since this is a small project where person has only a field to learn how this works, there is no point on going through the whole update-each-individual-element-at-a-time process)
      * @return
      */
     int updatePersonByID(UUID id, Person person);
