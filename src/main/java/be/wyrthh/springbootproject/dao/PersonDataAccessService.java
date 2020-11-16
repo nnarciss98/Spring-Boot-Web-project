@@ -67,14 +67,16 @@ public class PersonDataAccessService implements PersonDao {
     public int updatePersonByID(UUID id, Person person) {
         return selectPersonByID(id)
                 .map(p -> {
-                    int indexOfPersonToDelete = database.indexOf(person);
-                    if (indexOfPersonToDelete == 1) {
-                        database.set(indexOfPersonToDelete, person);
+                    int indexOfPersonToUpdate = database.indexOf(p);
+                    if (indexOfPersonToUpdate >= 0) {
+                        database.set(indexOfPersonToUpdate, new Person(id, person.getName()));
                         return 1;
                     }
                     return 0;
                 }).orElse(0); //Here you could send the client to a 404 page or a personalised message
     }
+
+
 
     /**
      * Checks whether there exists a person in the database with the given ID, if there exists one it will pe deleted.
@@ -85,8 +87,9 @@ public class PersonDataAccessService implements PersonDao {
      */
     @Override
     public int deletePersonById(UUID id) {
-        if (selectPersonByID(id).isPresent()) {
-            database.remove(selectPersonByID(id));
+        Optional<Person> personToBeDeleted = selectPersonByID(id);
+        if (personToBeDeleted.isPresent()){
+            database.remove(personToBeDeleted.get());
             return 1;
         }
         return 0;

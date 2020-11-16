@@ -1,6 +1,7 @@
 package be.wyrthh.springbootproject.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.NonNull;
 
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ public class Person {
     //This annotation will allow us to work with data in jason format, more specifically to map values from jason type to object parameters or vice-versa
     @JsonProperty("id")
     private final UUID id;
+    @NonNull    //This annotation indicates that this field cannot be null (empty)
     @JsonProperty("name")
     private final String name;
 

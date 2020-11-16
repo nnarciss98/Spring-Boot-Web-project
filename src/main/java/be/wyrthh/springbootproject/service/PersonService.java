@@ -51,4 +51,29 @@ public class PersonService {
     public Optional<Person> getPersonByID(UUID id){
         return personDao.selectPersonByID(id);
     }
+
+    /**
+     * Update the person with the given ID with the data from the given person.
+     * @param id
+     *          ID of the person that will be updated.
+     * @param person
+     *          Person object with the updated data
+     * @return
+     *          If the person is updated successfully return 1, else return 0.
+     */
+    public int updatePerson(UUID id, Person person){
+        return personDao.updatePersonByID(id, person);
+    }
+
+    /**
+     * Delete the person with the given ID.
+     * @param id
+     *          ID of the person that needs to be deleted.
+     * @return
+     *          If the person is deleted successfully return 1, else return 0.
+     */
+    public int deletePerson(UUID id){
+        return personDao.deletePersonById(id);
+    }
+
 }
