@@ -17,7 +17,7 @@ public class PersonService {
 
 
     @Autowired //Automatically looks up the needed beans in the bean pool (if any bean is needed to execute the constructor)
-    public PersonService(@Qualifier("Dao") PersonDao personDao){
+    public PersonService(@Qualifier("postgres") PersonDao personDao){
         this.personDao = personDao;
     }
 
